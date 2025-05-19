@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 
 # Load the model
-with open('model.pkl', 'rb') as f:
+with open('model.bin', 'rb') as f:
     model = pickle.load(f)
 
 # Expected features
