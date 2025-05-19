@@ -2,11 +2,9 @@ import streamlit as st
 import pandas as pd
 import pickle
 
-# Load the model
 with open('model.bin', 'rb') as f:
     model = pickle.load(f)
 
-# Expected features
 expected_features = [
     'age', 'gender', 'location', 'preferred_language', 'device_type',
     'total_revenue', 'auto_renew', 'plan_changes', 'months_using',
@@ -15,7 +13,6 @@ expected_features = [
     'subscription_month', 'subscription_year', 'monthly_avg_revenue'
 ]
 
-# Define categorical mappings (MUST match training!)
 label_maps = {
     'gender': {'Male': 0, 'Female': 1, 'Other': 2},
     'location': {'India': 0, 'US': 1, 'UK': 2, 'Other': 3},
@@ -24,10 +21,8 @@ label_maps = {
     'max_genre': {'Drama': 0, 'Action': 1, 'Comedy': 2, 'Romance': 3, 'Other': 4}
 }
 
-# Title
 st.title("📊 Subscription Churn Predictor")
 
-# Input fields
 age = st.number_input("Age", min_value=1, max_value=100, value=30)
 gender = st.selectbox("Gender", list(label_maps['gender'].keys()))
 location = st.selectbox("Location", list(label_maps['location'].keys()))
@@ -51,7 +46,6 @@ subscription_month = st.number_input("Subscription Month", min_value=1, max_valu
 subscription_year = st.number_input("Subscription Year", min_value=2000, max_value=2030, value=2024)
 monthly_avg_revenue = st.number_input("Monthly Average Revenue ($)", value=80.0)
 
-# Build input dictionary
 input_data = {
     'age': age,
     'gender': label_maps['gender'][gender],
@@ -74,15 +68,12 @@ input_data = {
     'monthly_avg_revenue': monthly_avg_revenue
 }
 
-# Convert to DataFrame
 input_df = pd.DataFrame([input_data])
-input_df = input_df[expected_features]  # ensure proper order
+input_df = input_df[expected_features]  
 
-# Show the input
 st.subheader("🔍 Encoded Input Preview")
 st.dataframe(input_df)
 
-# Predict
 if st.button("📈 Predict Churn Probability"):
     prob = model.predict_proba(input_df)[0][1]
     st.success(f"🧠 Predicted Churn Probability: **{prob:.2%}**")
