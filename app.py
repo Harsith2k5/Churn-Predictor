@@ -378,8 +378,8 @@ def load_model_and_preprocessors():
     """Loads the trained model and preprocessors (label encoders, scaler)."""
     try:
         # Adjusted paths as per the training script's saving locations
-        model_path = 'ChurnPredictor/xgboost_general_churn_model1.pkl'
-        data_path = 'ChurnPredictor/churn_dataset1.csv' # Assumes this is in the same directory as app.py
+        model_path = 'xgboost_general_churn_model1.pkl'
+        data_path = 'churn_dataset1.csv' # Assumes this is in the same directory as app.py
 
         if not os.path.exists(model_path):
             st.error(f"Error: Model file not found at `{model_path}`. Please ensure it's in the correct directory.")
