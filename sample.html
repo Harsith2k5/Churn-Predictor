@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Camera-Only Secret Message</title>
+    <style>
+        body {
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+        #secretMessage {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="secretMessage">Point a camera at this screen!</div>
+
+    <script>
+        const message = "SECRET123"; // Message only cameras can see
+        const element = document.getElementById("secretMessage");
+        
+        // Rapidly cycle colors to encode data
+        let frame = 0;
+        function animate() {
+            const r = (message.charCodeAt(frame % message.length) % 256);
+            const g = 255 - r;
+            const b = (frame * 10) % 256;
+            
+            element.style.color = `rgb(${r}, ${g}, ${b})`;
+            element.style.textShadow = `0 0 10px rgb(${g}, ${b}, ${r})`;
+            
+            frame++;
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
+</body>
+</html>
